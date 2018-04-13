@@ -8,18 +8,6 @@
 // Your implementations HERE
 //=========================================================
 
-
-static void *fblock=NULL;
-pthread_mutex_t mutex;
-mblock find_block(mblock* last,size_t size);
-mblock heap_extra(mblock last,size_t size);
-void split(mblock last,size_t size);
-mblock get_block(void *ptr);
-int valid_addr(void *ptr);
-
-void* malloc_unsafe(size_t size);
-void free_unsafe(void *ptr);
-
 void* do_malloc(size_t size) {
 
     pthread_mutex_lock(&mutex);
