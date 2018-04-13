@@ -6,13 +6,11 @@
 // Your implementations HERE
 //=========================================================
 
-//typedef struct block* mblock;
-typedef struct block{
+typedef struct block* mblock;
+struct block{
   size_t size;
-  struct block* next;
-  struct block* prev;
-  //mblock next;
-  //mblock prev;
+  mblock next;
+  mblock prev;
   int free;
   void *ptr;
   char data[1]; 
@@ -22,10 +20,9 @@ typedef struct block{
 
 #define BLOCK_SIZE 20
 
-void *fblock=NULL;
-//mblock fblock=NULL;
-mblock* find_block(mblock* last,size_t size);
-mblock* heap_extra(mblock* last,size_t size);
+mblock fblock=NULL;
+mblock find_block(mblock* last,size_t size);
+mblock heap_extra(mblock last,size_t size);
 //void split(mblock blk,size_t size);
 void* malloc_unsafe(size_t size);
 
@@ -49,7 +46,7 @@ void do_free(void *ptr) {
 }
 
 mblock find_block(mblock *last,size_t size){
-  mblock *b=fblock;
+  mblock b=fblock;
   while(b&&(!(b->free&&b->size>=size))){
     *last=b;
     b=b->next;
@@ -57,8 +54,8 @@ mblock find_block(mblock *last,size_t size){
   return b;
 }
 
-mblock heap_extra(mblock *last,size_t size){
-  mblock *new;
+mblock heap_extra(mblock last,size_t size){
+  mblock new;
   new=(sbrk(0));
   if((int)sbrk(BLOCK_SIZE+size)<0)//(void *)-1
      return NULL;
@@ -83,7 +80,7 @@ void split(mblock blk,size_t size){
 }*/
 
 void* malloc_unsafe(size_t size){
-  mblock *blk,*last;
+  mblock blk,last;
   if(size<=0)
      return NULL;
   size_t newsize;
