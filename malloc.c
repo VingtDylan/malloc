@@ -10,7 +10,7 @@ typedef struct block *mblock;
 struct block{
   size_t size;
   mblock next;
-  bool free;
+  int free;
   int padding;
   char data[1]; 
 };
@@ -59,7 +59,7 @@ mblock heap_extra(mblock last,size_t size){
   new->next=NULL;
   if(last)
      last->next=new;
-  new->free=false;
+  new->free=0;
   return new;
 }
 
@@ -68,7 +68,7 @@ void split(mblock blk,size_t size){
   new=blk->data+size;
   new->size=blk->size-size-BLOCK_SIZE;
   new->next=blk->next;
-  new->free=true;
+  new->free=1;
   blk->size=size;
   blk->next=new;
 }
@@ -89,7 +89,7 @@ void* malloc_unsafe(size_t size){
     if(blk){
        if((blk->size-newsize)>=(BLOCK_SIZE+8))
           split(last,newsize);
-       blk->free=false;
+       blk->free=0;
     }else{
        blk=heap_extra(last,newsize);
        if(!blk)
