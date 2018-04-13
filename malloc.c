@@ -1,7 +1,7 @@
 #include "malloc.h"
 #include "unistd.h"
 #include "stdlib.h"
-#include "sys/type.h"
+#include "sys/types.h"
 //=========================================================
 // Your implementations HERE
 //=========================================================
