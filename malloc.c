@@ -6,7 +6,7 @@
 // Your implementations HERE
 //=========================================================
 
-struct block{
+typedef struct block{
   size_t size;
   struct block* next;
   struct block* prev;
