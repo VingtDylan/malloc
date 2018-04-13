@@ -85,7 +85,6 @@ void* malloc_unsafe(size_t size){
   if(fblock){
     last=fblock;
     blk=find_block(&last,newsize);
-    printf("new log");
     if(blk){
        printf("log2");
        if((blk->size-newsize)>=(BLOCK_SIZE+8))
