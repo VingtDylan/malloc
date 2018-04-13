@@ -40,6 +40,7 @@ void do_free(void *ptr) {
     free_unsafe(ptr);
     pthread_mutex_unlock(&mutex);
     */
+    printf("free");
     free(ptr);
 }
 
@@ -80,8 +81,7 @@ void split(mblock blk,size_t size){
 void* malloc_unsafe(size_t size){
   mblock blk,last;
   size_t newsize;
-  newsize=align4(size);
-  printf("log1"); 
+  newsize=align4(size); 
   if(fblock){
     last=fblock;
     blk=find_block(&last,newsize);
@@ -91,7 +91,6 @@ void* malloc_unsafe(size_t size){
           split(last,newsize);
        blk->free=0;
     }else{
-       printf("log3");
        blk=heap_extra(last,newsize);
        if(!blk)
          return NULL;
