@@ -75,7 +75,7 @@ void split(mblock blk,size_t size){
 }
 
 void* malloc_unsafe(size_t size){
-  mblock* blk,last;
+  mblock *blk,*last;
   size_t newsize;
   newsize=align4(size); 
   if(fblock){
