@@ -89,8 +89,8 @@ void* malloc_unsafe(size_t size){
     last=fblock;
     blk=find_block(&last,newsize);
     if(blk){
-       //if((blk->size-newsize)>=(BLOCK_SIZE+4))
-         // split(last,newsize);
+       if((blk->size-newsize)>=(BLOCK_SIZE+4))
+          split(last,newsize);
        blk->free=0;
     }else{
        blk=heap_extra(last,newsize);
