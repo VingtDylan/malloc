@@ -52,7 +52,6 @@ mblock heap_extra(mblock last,size_t size){
 
 void split(mblock blk,size_t size){
   mblock new;
-  //new=blk->data+size;
   new->size=blk->size-size-BLOCK_SIZE;
   new->next=blk->next;
   new->free=1;
@@ -69,7 +68,7 @@ mblock get_block(void *ptr){
 int valid_addr(void *ptr){
   if(fblock){
      if(ptr>fblock&&ptr<sbrk(0)){
-        return ptr=(get_block(ptr))->ptr;
+        return ptr=(void *)((get_block(ptr))->ptr);
      }
   }
   return 0;
