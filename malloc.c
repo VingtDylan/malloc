@@ -63,9 +63,7 @@ mblock heap_extra(mblock last,size_t size){
   if((int)sbrk(BLOCK_SIZE+size)<0)//(void *)-1
      return NULL;
   new->size=size;
-  //new->prev=last;
   new->next=NULL;
-  //new->ptr=new->data;
   if(last)
      last->next=new;
   new->free=0;
