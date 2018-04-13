@@ -46,7 +46,7 @@ void do_free(void *ptr) {
 
 mblock find_block(mblock *last,size_t size){
   mblock b=fblock;
-  while(b&&!(b->free&&b->size>=size)){
+  while(b&&(!(b->free&&b->size>=size))){
     *last=b;
     b=b->next;
   }  
@@ -80,6 +80,8 @@ void split(mblock blk,size_t size){
 
 void* malloc_unsafe(size_t size){
   mblock blk,last;
+  if(size<=0)
+     return NULL;
   size_t newsize;
   newsize=align4(size); 
   if(fblock){
