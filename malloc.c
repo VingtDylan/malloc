@@ -25,7 +25,7 @@ static void *fblock=NULL;
 pthread_mutex_t mutex;
 mblock find_block(mblock* last,size_t size);
 mblock heap_extra(mblock last,size_t size);
-
+void split(mblock last,size_t size);
 mblock get_block(void *ptr);
 int valid_addr(void *ptr);
 
