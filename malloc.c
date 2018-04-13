@@ -8,15 +8,6 @@
 // Your implementations HERE
 //=========================================================
 
-typedef struct block* mblock;
-struct block{
-  size_t size;
-  mblock next;
-  mblock prev;
-  int free;
-  void *ptr;
-  char data[1]; 
-};
 
 static void *fblock=NULL;
 pthread_mutex_t mutex;
@@ -30,6 +21,7 @@ void* malloc_unsafe(size_t size);
 void free_unsafe(void *ptr);
 
 void* do_malloc(size_t size) {
+
     pthread_mutex_lock(&mutex);
     void *retval=malloc_unsafe(size);
     pthread_mutex_unlock(&mutex);
