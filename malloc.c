@@ -97,7 +97,7 @@ void* malloc_unsafe(size_t size){
          return NULL;
     } 
   }else{
-    printf("log4")
+    printf("log4");
     blk=heap_extra(NULL,newsize);
     if(!blk)
        return NULL;
