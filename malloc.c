@@ -2,7 +2,7 @@
 #include "unistd.h"
 #include "stdlib.h"
 #include "sys/types.h"
-#include "stdio.h"i
+#include "stdio.h"
 #include "pthread.h"
 //=========================================================
 // Your implementations HERE
@@ -18,9 +18,6 @@ struct block{
   char data[1]; 
 };
 
-//#define BLOCK_SIZE sizeof(struct block)
-#define BLOCK_SIZE 24
-
 static void *fblock=NULL;
 pthread_mutex_t mutex;
 mblock find_block(mblock* last,size_t size);
@@ -33,12 +30,11 @@ void* malloc_unsafe(size_t size);
 void free_unsafe(void *ptr);
 
 void* do_malloc(size_t size) {
-    
     pthread_mutex_lock(&mutex);
     void *retval=malloc_unsafe(size);
     pthread_mutex_unlock(&mutex);
     //return malloc(size);
-    return retval;//malloc_unsafe(size);
+    return retval;
 }
 
 void do_free(void *ptr) {
