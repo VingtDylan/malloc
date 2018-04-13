@@ -8,6 +8,10 @@
 // Your implementations HERE
 //=========================================================
 
+
+static void *fblock=NULL;
+pthread_mutex_t mutex;
+
 void* do_malloc(size_t size) {
 
     pthread_mutex_lock(&mutex);
