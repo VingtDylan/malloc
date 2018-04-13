@@ -26,8 +26,11 @@ pthread_mutex_t mutex;
 mblock find_block(mblock* last,size_t size);
 mblock heap_extra(mblock last,size_t size);
 
+mblock get_block(void *ptr);
+int valid_addr(void *ptr);
+
 void* malloc_unsafe(size_t size);
-//void free_unsafe(void *ptr);
+void free_unsafe(void *ptr);
 
 void* do_malloc(size_t size) {
     
@@ -79,6 +82,21 @@ void split(mblock blk,size_t size){
   blk->next=new;
 }
 
+mblock get_block(void *ptr){
+  char *tmp;
+  tmp=ptr;
+  return (p=tmp-=BLOCK_SIZE);
+}
+
+int valid_addr(void *ptr){
+  if(fblock){
+     if(ptr>fblock&&ptr<sbrk(0)){
+        return p=(get_block(ptr))->ptr;
+     }
+  }
+  return 0;
+}
+
 void* malloc_unsafe(size_t size){
   mblock blk,last;
   if(size<=0)
@@ -106,7 +124,13 @@ void* malloc_unsafe(size_t size){
   return blk->data;
 }
 
-
+void free_unsafe(void *ptr){
+  if(!ptr||(!valid(ptr)))
+     return ;
+  mblock used;
+  used=get_block(ptr);
+  used->free=1;
+}
 
 
 
