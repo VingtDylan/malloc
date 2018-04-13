@@ -21,7 +21,7 @@ struct block{
 //#define BLOCK_SIZE sizeof(struct block)
 #define BLOCK_SIZE 24
 
-static void *base=NULL;
+static void *fblock=NULL;
 pthread_mutex_t mutex;
 mblock find_block(mblock* last,size_t size);
 mblock heap_extra(mblock last,size_t size);
