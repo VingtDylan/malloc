@@ -92,6 +92,7 @@ void* malloc_unsafe(size_t size){
           split(last,newsize);
        blk->free=0;
     }else{
+       printf(log3);
        blk=heap_extra(last,newsize);
        if(!blk)
          return NULL;
