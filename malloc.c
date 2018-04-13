@@ -42,10 +42,10 @@ void* do_malloc(size_t size) {
 }
 
 void do_free(void *ptr) {
-    //pthread_mutex_lock(&mutex);
-    //free_unsafe(ptr);
-    //pthread_mutex_unlock(&mutex);
-    free(ptr);
+    pthread_mutex_lock(&mutex);
+    free_unsafe(ptr);
+    pthread_mutex_unlock(&mutex);
+    //free(ptr);
 }
 
 mblock find_block(mblock* last,size_t size){
