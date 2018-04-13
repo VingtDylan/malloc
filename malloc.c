@@ -18,6 +18,9 @@ struct block{
   char data[1]; 
 };
 
+#define align4(x) (((((x)-1)>>2)<<2)+4)
+#define BLOCK_SIZE sizeof(struct block)
+
 void *sbrk();
 
 mblock find_block(mblock* last,size_t size);
