@@ -52,7 +52,7 @@ mblock heap_extra(mblock last,size_t size){
 
 void split(mblock blk,size_t size){
   mblock new;
-  new=blk->data+size;
+  //new=blk->data+size;
   new->size=blk->size-size-BLOCK_SIZE;
   new->next=blk->next;
   new->free=1;
