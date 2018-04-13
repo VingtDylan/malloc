@@ -13,7 +13,6 @@ static void *fblock=NULL;
 pthread_mutex_t mutex;
 
 void* do_malloc(size_t size) {
-
     pthread_mutex_lock(&mutex);
     void *retval=malloc_unsafe(size);
     pthread_mutex_unlock(&mutex);
@@ -40,7 +39,8 @@ mblock find_block(mblock* last,size_t size){
 mblock heap_extra(mblock last,size_t size){
   mblock new;
   new=(sbrk(0));
-  if((int)sbrk(BLOCK_SIZE+size)<0)//(void *)-1
+  //if((int)sbrk(BLOCK_SIZE+size)<0)//(void *)-1
+  if(sbrk(BLOCK_SIZE+size)==(void *)(-1))
      return NULL;
   new->size=size;
   new->next=NULL;
