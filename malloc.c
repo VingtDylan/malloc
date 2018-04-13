@@ -56,7 +56,7 @@ mblock find_block(mblock *last,size_t size){
 
 mblock heap_extra(mblock last,size_t size){
   mblock new;
-  new=(block*)sbrk(0);
+  new=(block *)(sbrk(0));
   if((int)sbrk(BLOCK_SIZE+size)<0)//(void *)-1
      return NULL;
   new->size=size;
