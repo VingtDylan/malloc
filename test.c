@@ -77,7 +77,7 @@ static void do_finish() {
             continue;
         }
         size_t l = sprintf(buf, "%p,%lu\n", __log_buf[i].addr_,
-                                            __log_buf[i].len_);
+                                            (long unsigned int)__log_buf[i].len_);
         assert(l < 100);
         fwrite(buf, 1, l, fp);
     }
