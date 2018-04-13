@@ -74,29 +74,29 @@ void split(mblock blk,size_t size){
 }
 
 size_t align8(size_t size){
-  if(size&0x7==0)
+  if((size&0x7)==0)
      return size;
   return ((size>>3)+1)<<3;
 }
 
 void* malloc_unsafe(size_t size){
   mblock blk,last;
-  size_t size;
-  size=align8(size); 
+  size_t newsize;
+  new=align8(size); 
   if(fblock){
     last=fblock;
-    blk=find_block(&last,size);
+    blk=find_block(&last,newsize);
     if(blk){
-       if((blk->size-size)>=(BLOCK_SIZE+8))
-          split(last,size);
+       if((blk->size-newsize)>=(BLOCK_SIZE+8))
+          split(last,newsize);
        blk->free=false;
     }else{
-       blk=heap_extra(last.size);
+       blk=heap_extra(last,newsize);
        if(!blk)
          return NULL;
     } 
   }else{
-    blk=heap_extra(NULL,size);
+    blk=heap_extra(NULL,newsize);
     if(!blk)
        return NULL;
     fblock=b;
