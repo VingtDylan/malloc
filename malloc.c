@@ -2,6 +2,8 @@
 #include "unistd.h"
 #include "stdlib.h"
 #include "sys/types.h"
+#include "stdio.h"i
+#include "pthread.h"
 //=========================================================
 // Your implementations HERE
 //=========================================================
@@ -19,31 +21,28 @@ struct block{
 //#define BLOCK_SIZE sizeof(struct block)
 #define BLOCK_SIZE 24
 
-mblock fblock=NULL;
+static void *base=NULL;
+pthread_mutex_t mutex;
 mblock find_block(mblock* last,size_t size);
 mblock heap_extra(mblock last,size_t size);
-void split(mblock blk,size_t size);
 
 void* malloc_unsafe(size_t size);
 void free_unsafe(void *ptr);
 
 void* do_malloc(size_t size) {
-    /*
+    
     pthread_mutex_lock(&mutex);
-    malloc_unsafe(size);
+    void *retval=malloc_unsafe(size);
     pthread_mutex_unlock(&mutex);
-    */
     //return malloc(size);
-    return malloc_unsafe(size);
+    return retval;//malloc_unsafe(size);
 }
 
 void do_free(void *ptr) {
-    /*
     pthread_mutex_lock(&mutex);
     free_unsafe(ptr);
     pthread_mutex_unlock(&mutex);
-    */
-    free(ptr);
+    //free(ptr);
 }
 
 mblock find_block(mblock* last,size_t size){
@@ -86,12 +85,12 @@ void* malloc_unsafe(size_t size){
      return NULL;
   size_t newsize;
   newsize=align4(size); 
-  if(fblock){
-    last=fblock;
+  if(base){
+    last=base;
     blk=find_block(&last,newsize);
     if(blk){
-       if((blk->size-newsize)>=(BLOCK_SIZE+4))
-          split(last,newsize);
+       //if((blk->size-newsize)>=(BLOCK_SIZE+4))
+         // split(last,newsize);
        blk->free=0;
     }else{
        blk=heap_extra(last,newsize);
