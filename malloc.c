@@ -80,20 +80,24 @@ void split(mblock blk,size_t size){
 void* malloc_unsafe(size_t size){
   mblock blk,last;
   size_t newsize;
-  newsize=align4(size); 
+  newsize=align4(size);
+  printf("log1"); 
   if(fblock){
     last=fblock;
     blk=find_block(&last,newsize);
     if(blk){
+       printf("log2");
        if((blk->size-newsize)>=(BLOCK_SIZE+8))
           split(last,newsize);
        blk->free=0;
     }else{
+       printf("log3");
        blk=heap_extra(last,newsize);
        if(!blk)
          return NULL;
     } 
   }else{
+    printf("log4")
     blk=heap_extra(NULL,newsize);
     if(!blk)
        return NULL;
