@@ -9,7 +9,7 @@
 //=========================================================
 
 
-//static void *fblock=NULL;
+void *fblock=NULL;
 pthread_mutex_t mutex;
 
 void* do_malloc(size_t size) {
