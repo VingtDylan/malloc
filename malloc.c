@@ -28,8 +28,8 @@ void* do_malloc(size_t size) {
     malloc_unsafe(size);
     pthread_mutex_unlock(&mutex);
     */
-    return malloc(size);
-    //return malloc_unsafe(size);
+    //return malloc(size);
+    return malloc_unsafe(size);
 }
 
 void do_free(void *ptr) {
