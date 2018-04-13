@@ -14,7 +14,7 @@ struct block{
   int free;
   void *ptr;
   char data[1]; 
-}mblock;
+};
 
 //#define BLOCK_SIZE sizeof(struct block)
 
