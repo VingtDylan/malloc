@@ -17,14 +17,15 @@ struct block{
 };
 
 //#define BLOCK_SIZE sizeof(struct block)
-
-#define BLOCK_SIZE 20
+#define BLOCK_SIZE 24
 
 mblock fblock=NULL;
 mblock find_block(mblock* last,size_t size);
 mblock heap_extra(mblock last,size_t size);
-//void split(mblock blk,size_t size);
+void split(mblock blk,size_t size);
+
 void* malloc_unsafe(size_t size);
+void free_unsafe(void *ptr);
 
 void* do_malloc(size_t size) {
     /*
@@ -45,7 +46,7 @@ void do_free(void *ptr) {
     free(ptr);
 }
 
-mblock find_block(mblock *last,size_t size){
+mblock find_block(mblock* last,size_t size){
   mblock b=fblock;
   while(b&&(!(b->free&&b->size>=size))){
     *last=b;
@@ -60,15 +61,15 @@ mblock heap_extra(mblock last,size_t size){
   if((int)sbrk(BLOCK_SIZE+size)<0)//(void *)-1
      return NULL;
   new->size=size;
-  new->prev=last;
+  //new->prev=last;
   new->next=NULL;
-  new->ptr=new->data;
+  //new->ptr=new->data;
   if(last)
      last->next=new;
   new->free=0;
   return new;
 }
-/*
+
 void split(mblock blk,size_t size){
   mblock new;
   new=blk->data+size;
@@ -77,7 +78,7 @@ void split(mblock blk,size_t size){
   new->free=1;
   blk->size=size;
   blk->next=new;
-}*/
+}
 
 void* malloc_unsafe(size_t size){
   mblock blk,last;
@@ -89,8 +90,8 @@ void* malloc_unsafe(size_t size){
     last=fblock;
     blk=find_block(&last,newsize);
     if(blk){
-       //if((blk->size-newsize)>=(BLOCK_SIZE+8))
-          //split(last,newsize);
+       if((blk->size-newsize)>=(BLOCK_SIZE+4))
+          split(last,newsize);
        blk->free=0;
     }else{
        blk=heap_extra(last,newsize);
