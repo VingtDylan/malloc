@@ -10,8 +10,9 @@ typedef struct block *mblock;
 struct block{
   size_t size;
   mblock next;
+  mblock prev;
   int free;
-  int padding;
+  void *ptr;
   char data[1]; 
 };
 
@@ -19,7 +20,6 @@ void *fblock=NULL;
 mblock find_block(mblock *last,size_t size);
 mblock heap_extra(mblock last,size_t size);
 void split(mblock blk,size_t size);
-size_t align8(size_t size);
 void* malloc_unsafe(size_t size);
 
 void* do_malloc(size_t size) {
@@ -28,8 +28,8 @@ void* do_malloc(size_t size) {
     malloc_unsafe(size);
     pthread_mutex_unlock(&mutex);
     */
-    return malloc(size);
-    //return malloc_unsafe(size);
+    //return malloc(size);
+    return malloc_unsafe(size);
 }
 
 void do_free(void *ptr) {
@@ -73,16 +73,10 @@ void split(mblock blk,size_t size){
   blk->next=new;
 }
 
-size_t align8(size_t size){
-  if((size&0x7)==0)
-     return size;
-  return ((size>>3)+1)<<3;
-}
-
 void* malloc_unsafe(size_t size){
   mblock blk,last;
   size_t newsize;
-  newsize=align8(size); 
+  newsize=align4(size); 
   if(fblock){
     last=fblock;
     blk=find_block(&last,newsize);
