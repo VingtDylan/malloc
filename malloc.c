@@ -91,7 +91,7 @@ mblock get_block(void *ptr){
 int valid_addr(void *ptr){
   if(fblock){
      if(ptr>fblock&&ptr<sbrk(0)){
-        return p=(get_block(ptr))->ptr;
+        return ptr=(get_block(ptr))->ptr;
      }
   }
   return 0;
