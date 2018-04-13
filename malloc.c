@@ -85,8 +85,8 @@ void* malloc_unsafe(size_t size){
      return NULL;
   size_t newsize;
   newsize=align4(size); 
-  if(base){
-    last=base;
+  if(fblock){
+    last=fblock;
     blk=find_block(&last,newsize);
     if(blk){
        //if((blk->size-newsize)>=(BLOCK_SIZE+4))
