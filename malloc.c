@@ -16,7 +16,9 @@ struct block{
   char data[1]; 
 };
 
-#define BLOCK_SIZE sizeof(struct block)
+//#define BLOCK_SIZE sizeof(struct block)
+
+#define BLOCK_SIZE 20
 
 mblock fblock=NULL;
 mblock find_block(mblock* last,size_t size);
