@@ -125,7 +125,7 @@ void* malloc_unsafe(size_t size){
 }
 
 void free_unsafe(void *ptr){
-  if(!ptr||(!valid(ptr)))
+  if(!ptr||(!valid_addr(ptr)))
      return ;
   mblock used;
   used=get_block(ptr);
