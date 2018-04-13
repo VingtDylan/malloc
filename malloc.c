@@ -23,7 +23,7 @@ struct block{
 mblock fblock=NULL;
 mblock find_block(mblock* last,size_t size);
 mblock heap_extra(mblock last,size_t size);
-void split(mblock blk,size_t size);
+//void split(mblock blk,size_t size);
 void* malloc_unsafe(size_t size);
 
 void* do_malloc(size_t size) {
@@ -42,7 +42,6 @@ void do_free(void *ptr) {
     free_unsafe(ptr);
     pthread_mutex_unlock(&mutex);
     */
-    printf("free");
     free(ptr);
 }
 
@@ -69,7 +68,7 @@ mblock heap_extra(mblock last,size_t size){
   new->free=0;
   return new;
 }
-
+/*
 void split(mblock blk,size_t size){
   mblock new;
   new=blk->data+size;
@@ -78,7 +77,7 @@ void split(mblock blk,size_t size){
   new->free=1;
   blk->size=size;
   blk->next=new;
-}
+}*/
 
 void* malloc_unsafe(size_t size){
   mblock blk,last;
