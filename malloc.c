@@ -82,7 +82,7 @@ size_t align8(size_t size){
 void* malloc_unsafe(size_t size){
   mblock blk,last;
   size_t newsize;
-  new=align8(size); 
+  newsize=align8(size); 
   if(fblock){
     last=fblock;
     blk=find_block(&last,newsize);
@@ -99,7 +99,7 @@ void* malloc_unsafe(size_t size){
     blk=heap_extra(NULL,newsize);
     if(!blk)
        return NULL;
-    fblock=b;
+    fblock=blk;
   }
   return blk->data;
 }
