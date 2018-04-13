@@ -6,16 +6,14 @@
 // Your implementations HERE
 //=========================================================
 
-#define BLOCK_SIZE 24
-
 typedef struct block *mblock;
 struct block{
   size_t size;
-  m_block next;
+  mblock next;
   bool free;
   int padding;
   char data[1]; 
-}
+};
 
 void *fblock=NULL;
 mblock find_block(mblock *last,size_t size);
@@ -56,7 +54,7 @@ mblock heap_extra(mblock last,size_t size){
   mblock new;
   new=sbrk(0);
   if(sbrk(BLOCK_SIZE+size)==(void*)-1)
-     return NULL:
+     return NULL;
   new->size=size;
   new->next=NULL;
   if(last)
