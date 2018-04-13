@@ -85,7 +85,7 @@ void split(mblock blk,size_t size){
 mblock get_block(void *ptr){
   char *tmp;
   tmp=ptr;
-  return (p=tmp-=BLOCK_SIZE);
+  return (ptr=tmp-=BLOCK_SIZE);
 }
 
 int valid_addr(void *ptr){
