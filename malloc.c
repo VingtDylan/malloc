@@ -1,7 +1,7 @@
 #include "malloc.h"
 #include "unistd.h"
-#include <stdlib.h>
-
+#include "stdlib.h"
+#include "sys/type.h"
 //=========================================================
 // Your implementations HERE
 //=========================================================
@@ -16,7 +16,7 @@ struct block{
   char data[1]; 
 };
 
-void *fblock=NULL;
+static void *fblock=NULL;
 mblock find_block(mblock *last,size_t size);
 mblock heap_extra(mblock last,size_t size);
 void split(mblock blk,size_t size);
@@ -53,10 +53,12 @@ mblock find_block(mblock *last,size_t size){
 mblock heap_extra(mblock last,size_t size){
   mblock new;
   new=sbrk(0);
-  if(sbrk(BLOCK_SIZE+size)==(void*)-1)
+  if((int)sbrk(BLOCK_SIZE+size)<0)//(void *)-1
      return NULL;
   new->size=size;
+  new->prev=last;
   new->next=NULL;
+  new->ptr=new->data;
   if(last)
      last->next=new;
   new->free=0;
