@@ -9,22 +9,22 @@
 //=========================================================
 
 
-void *fblock=NULL;
+static void *fblock=NULL;
 pthread_mutex_t mutex;
 
 void* do_malloc(size_t size) {
-    //pthread_mutex_lock(&mutex);
-    //void *retval=malloc_unsafe(size);
-    //pthread_mutex_unlock(&mutex);
-    return malloc(size);
-    //return retval;
+    pthread_mutex_lock(&mutex);
+    void *retval=malloc_unsafe(size);
+    pthread_mutex_unlock(&mutex);
+    //return malloc(size);
+    return retval;
 }
 
 void do_free(void *ptr) {
-    //pthread_mutex_lock(&mutex);
+    pthread_mutex_lock(&mutex);
     free_unsafe(ptr);
-    //pthread_mutex_unlock(&mutex);
-    free(ptr);
+    pthread_mutex_unlock(&mutex);
+    //free(ptr);
 }
 
 mblock find_block(mblock* last,size_t size){
