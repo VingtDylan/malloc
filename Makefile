@@ -1,5 +1,6 @@
 LAB=malloc
-
+STUID = 161240005
+STUNAME = 陈勇虎
 include Makefile.git
 
 .PHONY: build run submit clean
